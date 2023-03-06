@@ -1,0 +1,15 @@
+body.theme-light {
+	background-color: white;
+	color: black;
+}
+
+/*
+.theme-light main {
+	background-color: white;
+}
+*/
+
+.theme-light #searchInputTxt {
+	background-color: silver;
+}
+

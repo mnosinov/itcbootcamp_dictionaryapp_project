@@ -1,0 +1,16 @@
+body.theme-dark {
+	background-color: black;
+	color: white;
+}
+
+/*
+.theme-dark main {
+	background-color: black;
+}
+*/
+
+.theme-dark #searchInputTxt {
+	background-color: gray;
+}
+
+
