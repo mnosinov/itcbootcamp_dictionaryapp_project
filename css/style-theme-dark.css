@@ -11,4 +11,5 @@ body.theme-dark {
 
 .theme-dark #searchInputTxt {
 	background-color: gray;
+	color: white;
 }

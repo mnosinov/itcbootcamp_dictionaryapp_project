@@ -7,8 +7,8 @@ const wordInfoSection = document.getElementById('wordInfoSection');
 
 /* style themes ----------------------------BEGIN */
 let themes = [
-	{ name: 'theme-light', cssFile: 'css/style-theme-light.css', themeIcon: 'images/icon-theme-light.svg', title: 'Light Mode' },
-	{ name: 'theme-dark', cssFile: 'css/style-theme-dark.css', themeIcon: 'images/icon-theme-dark.svg', title: 'Dark Mode'  }
+	{ name: 'theme-light', cssFile: 'css/style-theme-light.css' },
+	{ name: 'theme-dark', cssFile: 'css/style-theme-dark.css' }
 ];
 
 function initThemes(defaultTheme) { // should be called once on page load.
@@ -94,12 +94,63 @@ function fetchData(word) {
 		});
 }
 
-function showWordInfo(responseData) {
-	console.log(responseData);
+function showWordInfo(data) {
+	preprocessInfo(data);
+}
+
+function isObjInList(obj, list) {
+	// create list if it's undefined
+	let result = false;
+	for (let o of list) {
+		if (JSON.stringify(o) === JSON.stringify(obj)) {
+			result = true;
+			break;
+		}
+	}
+	return result;
+}
+
+function preprocessInfo(data) {
+	console.log(data);
+	let rslt = {};
+	for (let wordData of data) {
+		console.log(wordData);
+		rslt.word = wordData.word;
+		// phonetics
+		for (let ph of wordData.phonetics) {
+			if (!rslt.phonetics) rslt.phonetics = [];
+			if (!isObjInList(ph, rslt.phonetics)) rslt.phonetics.push(ph);
+		}
+		// meanings by language part
+		for (let mn of wordData.meanings) {
+			if (!rslt.meanings) rslt.meanings = {};
+			if (!rslt.meanings[mn.partOfSpeech]) rslt.meanings[mn.partOfSpeech] = {};
+			// synonyms - meaning level
+			for (let syn of mn.synonyms) {
+				if (!rslt.meanings[mn.partOfSpeech].synonyms) rslt.meanings[mn.partOfSpeech].synonyms = [];
+				if (!isObjInList(syn, rslt.meanings[mn.partOfSpeech].synonyms)) rslt.meanings[mn.partOfSpeech].synonyms.push(syn);
+			}
+			// antonyms - meaning level
+			for (let syn of mn.antonyms) {
+				if (!rslt.meanings[mn.partOfSpeech].antonyms) rslt.meanings[mn.partOfSpeech].antonyms = [];
+				if (!isObjInList(syn, rslt.meanings[mn.partOfSpeech].antonyms)) rslt.meanings[mn.partOfSpeech].antonyms.push(syn);
+			}
+			// definitions
+			for (let df of mn.definitions) {
+				// synonyms - definition level
+				// antonyms - definition level
+				if (!rslt.meanings[mn.partOfSpeech].definitions) rslt.meanings[mn.partOfSpeech].definitions = [];
+				if (!isObjInList(df, rslt.meanings[mn.partOfSpeech].definitions)) rslt.meanings[mn.partOfSpeech].definitions.push(df);
+			}
+
+		}
+		// source URLs
+
+	}
+	console.log('result', rslt);
 }
 
 function showWordNotFound(word) {
-	console.log(1222);
 	wordInfoSection.innerHTML = `
 		The word "${word}" has been not found in the dictionary.
 	`;
