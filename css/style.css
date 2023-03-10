@@ -64,9 +64,22 @@ header .logo img {
 	height: 20px;
 }
 
+main {
+	width: 100%;
+}
+
+.search-section {
+	width: 100%;
+}
+
 #searchInputTxt {
-	background: transparent url("../images/search-icon.png") no-repeat 13px center;
-	background-size: 4%;
+	background: transparent url("../images/search-icon.png") no-repeat;
+	background-position: 98% center;
+	background-size: 15px;
+	width: 100%;
+	padding: 10px;
+	border-radius: 9px;
+	border: none;
 }
 
 /*color: #AD0AFF */

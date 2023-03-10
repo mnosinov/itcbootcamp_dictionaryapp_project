@@ -13,4 +13,7 @@ body.theme-dark {
 	background-color: gray;
 }
 
+.theme-dark header {
+	background-color: silver;
+}
 
