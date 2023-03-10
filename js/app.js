@@ -1,4 +1,9 @@
 const themeSwitcherBtn = document.getElementById('themeSwitcherBtn');
+const fontsSelect = document.getElementById('fontsSelect');
+const searchInputTxt = document.getElementById('searchInputTxt');
+const wordInfoSection = document.getElementById('wordInfoSection');
+
+
 
 /* style themes ----------------------------BEGIN */
 let themes = [
@@ -67,6 +72,38 @@ function setNextTheme(defaultTheme=undefined) {
 	// add the next theme class to body's class list
 	setThemeToBodyClasses(nextTheme);
 }
+
+function applyFont(font='serif') {
+	document.getElementsByTagName('body')[0].style.fontFamily = font;
+}
+
+function fetchData(word) {
+	fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+		.then(response => {
+			if (response.ok){
+				return response.json()
+			} else if (response.status === 404) {
+				showWordNotFound(word);
+				return Promise.reject('error 404');
+			} else {
+				return Promise.reject('some error', response.status);
+			}
+		})
+		.then(responseData => {
+			showWordInfo(responseData);
+		});
+}
+
+function showWordInfo(responseData) {
+	console.log(responseData);
+}
+
+function showWordNotFound(word) {
+	console.log(1222);
+	wordInfoSection.innerHTML = `
+		The word "${word}" has been not found in the dictionary.
+	`;
+}
 /* style themes ----------------------------END */
 /* data fetching ---------------------------BEGIN */
 /* data fetching ---------------------------END */
@@ -75,9 +112,16 @@ themeSwitcherBtn.addEventListener('click', e => {
 	setNextTheme();
 });
 fontsSelect.addEventListener('change', e => {
-	document.getElementsByTagName('body')[0].style.fontFamily = e.target.value;
+	applyFont(e.target.value);
+});
+searchInputTxt.addEventListener('keydown', e => {
+	if (e.key === 'Enter') {
+		fetchData(e.target.value);
+		console.log(e.target.value);
+	}
 });
 /* event handlers -------------------------END */
 
+applyFont();
 let defaultTheme = themes.find( element => element.name === 'theme-light');
 initThemes(defaultTheme);
