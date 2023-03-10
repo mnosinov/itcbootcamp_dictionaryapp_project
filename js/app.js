@@ -21,8 +21,6 @@ function initThemes(defaultTheme) { // should be called once on page load.
 	removeAllThemesFromBodyClasses();
 	// add the next theme class to body's class list
 	setThemeToBodyClasses(currentTheme);
-	// set current theme switcher label
-	setCurrentThemeSwitcherLabel(currentTheme);
 }
 
 function getCurrentTheme(defaultTheme=undefined) {
@@ -68,19 +66,6 @@ function setNextTheme(defaultTheme=undefined) {
 	removeAllThemesFromBodyClasses();
 	// add the next theme class to body's class list
 	setThemeToBodyClasses(nextTheme);
-	// set current theme switcher label
-	setCurrentThemeSwitcherLabel(nextTheme);
-}
-
-function setCurrentThemeSwitcherLabel(theme) {
-	if (theme) {
-		// get the next theme icon and label
-		let nextThemeIndex = (themes.indexOf(theme) + 1) % themes.length;
-		let nextTheme = themes[nextThemeIndex];
-		themeIconImg.src = nextTheme.themeIcon;
-		themeIconImg.alt = `${nextTheme.title} Icon`;
-		themeTitleDiv.innerHTML = nextTheme.title;
-	}
 }
 /* style themes ----------------------------END */
 /* data fetching ---------------------------BEGIN */
@@ -88,6 +73,9 @@ function setCurrentThemeSwitcherLabel(theme) {
 /* event handlers -------------------------BEGIN */
 themeSwitcherBtn.addEventListener('click', e => {
 	setNextTheme();
+});
+fontsSelect.addEventListener('change', e => {
+	document.getElementsByTagName('body')[0].style.fontFamily = e.target.value;
 });
 /* event handlers -------------------------END */
 

@@ -1,6 +1,8 @@
-* {
-	font-family: serif;
-	font-weight: 600;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+</style>* {
+	font-family: inherit; 
+	font-weight: 400;
 	font-size: 14px;
 	box-sizing: border-box;
 }
@@ -51,6 +53,8 @@ header .logo img {
 .font-select {
 	border: none;
 	background-color: inherit;
+	text-align: right;
+	color: inherit;
 }
 
 
