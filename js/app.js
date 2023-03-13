@@ -95,7 +95,8 @@ function fetchData(word) {
 }
 
 function showWordInfo(data) {
-	preprocessInfo(data);
+	let dataToShow = preprocessInfo(data);
+	// show info TODO
 }
 
 function isObjInList(obj, list) {
@@ -110,6 +111,7 @@ function isObjInList(obj, list) {
 	}
 	// add object to list if it is not in already
 	if (!isInList) list.push(obj);
+	return list;
 }
 
 function preprocessInfo(data) {
@@ -119,36 +121,38 @@ function preprocessInfo(data) {
 		console.log(wordData);
 		rslt.word = wordData.word;
 		// phonetics
-		for (let ph of wordData.phonetics) {
-			isObjInList(ph, rslt.phonetics);
-		}
+		for (let ph of wordData.phonetics)
+			rslt.phonetics = isObjInList(ph, rslt.phonetics);
 		// meanings by language part
 		for (let mn of wordData.meanings) {
 			if (!rslt.meanings) rslt.meanings = {};
 			if (!rslt.meanings[mn.partOfSpeech]) rslt.meanings[mn.partOfSpeech] = {};
 			// synonyms - meaning level
-			for (let syn of mn.synonyms) {
-				if (!rslt.meanings[mn.partOfSpeech].synonyms) rslt.meanings[mn.partOfSpeech].synonyms = [];
-				if (!isObjInList(syn, rslt.meanings[mn.partOfSpeech].synonyms)) rslt.meanings[mn.partOfSpeech].synonyms.push(syn);
-			}
+			for (let syn of mn.synonyms)
+				rslt.meanings[mn.partOfSpeech].synonyms = isObjInList(syn, rslt.meanings[mn.partOfSpeech].synonyms);
 			// antonyms - meaning level
-			for (let syn of mn.antonyms) {
-				if (!rslt.meanings[mn.partOfSpeech].antonyms) rslt.meanings[mn.partOfSpeech].antonyms = [];
-				if (!isObjInList(syn, rslt.meanings[mn.partOfSpeech].antonyms)) rslt.meanings[mn.partOfSpeech].antonyms.push(syn);
-			}
+			for (let ant of mn.antonyms)
+				rslt.meanings[mn.partOfSpeech].antonyms = isObjInList(ant, rslt.meanings[mn.partOfSpeech].antonyms);
 			// definitions
 			for (let df of mn.definitions) {
 				// synonyms - definition level
+				for (let syn of df.synonyms)
+					rslt.meanings[mn.partOfSpeech].synonyms = isObjInList(syn, rslt.meanings[mn.partOfSpeech].synonyms);
+				delete df.synonyms;
 				// antonyms - definition level
-				if (!rslt.meanings[mn.partOfSpeech].definitions) rslt.meanings[mn.partOfSpeech].definitions = [];
-				if (!isObjInList(df, rslt.meanings[mn.partOfSpeech].definitions)) rslt.meanings[mn.partOfSpeech].definitions.push(df);
+				for (let ant of df.antonyms)
+					rslt.meanings[mn.partOfSpeech].antonyms = isObjInList(ant, rslt.meanings[mn.partOfSpeech].antonyms);
+				delete df.antonyms;
+				// add definition
+				rslt.meanings[mn.partOfSpeech].definitions = isObjInList(df, rslt.meanings[mn.partOfSpeech].definitions);
 			}
-
 		}
 		// source URLs
-
+		for (let su of wordData.sourceUrls)
+			rslt.sourceUrls = isObjInList(su, rslt.sourceUrls);
 	}
 	console.log('result', rslt);
+	return rslt;
 }
 
 function showWordNotFound(word) {
