@@ -100,14 +100,16 @@ function showWordInfo(data) {
 
 function isObjInList(obj, list) {
 	// create list if it's undefined
-	let result = false;
+	if (!list) list = [];
+	let isInList = false;
 	for (let o of list) {
 		if (JSON.stringify(o) === JSON.stringify(obj)) {
-			result = true;
+			isInList = true;
 			break;
 		}
 	}
-	return result;
+	// add object to list if it is not in already
+	if (!isInList) list.push(obj);
 }
 
 function preprocessInfo(data) {
@@ -118,8 +120,7 @@ function preprocessInfo(data) {
 		rslt.word = wordData.word;
 		// phonetics
 		for (let ph of wordData.phonetics) {
-			if (!rslt.phonetics) rslt.phonetics = [];
-			if (!isObjInList(ph, rslt.phonetics)) rslt.phonetics.push(ph);
+			isObjInList(ph, rslt.phonetics);
 		}
 		// meanings by language part
 		for (let mn of wordData.meanings) {
