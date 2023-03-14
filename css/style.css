@@ -86,5 +86,61 @@ main {
 	border: none;
 }
 
-/*color: #AD0AFF */
 
+#wordInfoSection {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+#wordInfoSection h2 {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.phonetics-list {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.phonetic {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+a {
+	text-decoration: none;
+	font-size: 1.2em;
+}
+
+a:link,
+a:visited,
+a:active {
+	color: #AD0AFF;
+}
+
+a:hover {
+	color: red;
+}
+
+.spell-audio {
+	background-color: pink;
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+}
+
+.spell-audio:hover {
+	background-color: orange;
+}
+
+.spell-audio img{
+	height: 20px;
+	margin: 10px;
+}
