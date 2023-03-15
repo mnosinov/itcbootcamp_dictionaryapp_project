@@ -206,7 +206,6 @@ function initAudioBtns() {
 			playStopImg.src = 'images/play.png';
 		});
 	});
-	console.log(spellAudioDivs);
 }
 /* event handlers -------------------------END */
 

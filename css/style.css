@@ -53,12 +53,14 @@ header .logo img {
 .font-select {
 	border: none;
 	text-align: right;
+	font-weight: bold;
 }
 
 
 .font-select option {
 	border: none;
 	background-color: inherit;
+	font-weight: bold;
 }
 
 .theme-icon img {
@@ -139,7 +141,97 @@ a:hover {
 	background-color: orange;
 }
 
-.spell-audio img{
+.spell-audio img {
 	height: 20px;
 	margin: 10px;
+}
+
+.part-of-speech {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.part-of-speech span {
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.horizontal-bar {
+	width: 100%;
+	border-top: 1px solid silver;
+}
+
+.meanings-div h3,
+.synonyms-list h3,
+.antonyms-list h3 {
+	color: gray;
+	margin: 20px 0 15px;
+	font-size: 1.2em;
+}
+
+.meanings-div ul {
+	margin-left: 30px;
+}
+
+.meanings-div li {
+	margin: 15px 0;
+}
+
+.meanings-div .meaning-example {
+	color: gray;
+	margin-top: 5px;
+}
+
+.synonyms-list,
+.antonyms-list {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.synonyms-list ul,
+.antonyms-list ul,
+.source-urls ul {
+	display: flex;
+	list-style-type: none;
+	margin-top: 4px;
+	margin-left: 20px;
+	flex-wrap: wrap;
+}
+
+.synonyms-list li,
+.antonyms-list li,
+.source-urls li {
+	padding: 0 9px;
+}
+
+.synonyms-list li *,
+.antonyms-list li  * {
+	font-weight: bold;
+}
+
+.source-urls {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+}
+
+.source-urls h3 {
+	color: gray;
+	margin: 4px 0 15px;
+	font-size: 1.2em;
+}
+
+.source-urls img {
+	height: 17px;
+	width: 15px;
+	padding-top: 5px;
+	margin-left: 5px;
+}
+
+.source-urls a {
+	color: inherit;
 }
