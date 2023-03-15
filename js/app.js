@@ -2,7 +2,7 @@ const themeSwitcherBtn = document.getElementById('themeSwitcherBtn');
 const fontsSelect = document.getElementById('fontsSelect');
 const searchInputTxt = document.getElementById('searchInputTxt');
 const wordInfoSection = document.getElementById('wordInfoSection');
-
+const searchBtn = document.getElementById('searchBtn');
 
 
 /* style themes ----------------------------BEGIN */
@@ -160,22 +160,6 @@ function showWordNotFound(word) {
 		The word "${word}" has been not found in the dictionary.
 	`;
 }
-/* style themes ----------------------------END */
-/* data fetching ---------------------------BEGIN */
-/* data fetching ---------------------------END */
-/* event handlers -------------------------BEGIN */
-themeSwitcherBtn.addEventListener('click', e => {
-	setNextTheme();
-});
-fontsSelect.addEventListener('change', e => {
-	applyFont(e.target.value);
-});
-searchInputTxt.addEventListener('keydown', e => {
-	if (e.key === 'Enter') {
-		fetchData(e.target.value);
-		console.log(e.target.value);
-	}
-});
 
 function toggleAudio(audio, playImg) {
 	if (audio.paused) {
@@ -207,6 +191,26 @@ function initAudioBtns() {
 		});
 	});
 }
+/* style themes ----------------------------END */
+/* data fetching ---------------------------BEGIN */
+/* data fetching ---------------------------END */
+/* event handlers -------------------------BEGIN */
+themeSwitcherBtn.addEventListener('click', e => {
+	setNextTheme();
+});
+fontsSelect.addEventListener('change', e => {
+	applyFont(e.target.value);
+});
+searchInputTxt.addEventListener('keydown', e => {
+	if (e.key === 'Enter') {
+		fetchData(e.target.value);
+		console.log(e.target.value);
+	}
+});
+searchBtn.addEventListener('click', e => {
+		fetchData(e.target.value);
+});
+
 /* event handlers -------------------------END */
 
 applyFont();

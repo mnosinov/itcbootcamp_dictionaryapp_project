@@ -12,7 +12,27 @@ body.theme-dark {
 	color: white;
 }
 
+.theme-dark .searchBtn {
+	background-color: gray;
+}
+
 .theme-dark .font-select {
 	background-color: black;
 	color: white;
 }
+
+.theme-dark .source-urls a {
+	background-image: url('../images/url-white.png');
+	background-repeat: no-repeat;
+	background-position: right;
+	background-size: 1em;
+}
+
+.theme-dark .spell-audio {
+	background-color: purple;
+}
+
+.theme-dark .spell-audio:hover {
+	background-color: orange;
+}
+
