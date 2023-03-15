@@ -3,13 +3,16 @@ body.theme-dark {
 	color: white;
 }
 
-/*
-.theme-dark main {
-	background-color: black;
+.theme-dark #searchInputTxt::placeholder {
+	color: silver;
 }
-*/
 
 .theme-dark #searchInputTxt {
 	background-color: gray;
+	color: white;
+}
+
+.theme-dark .font-select {
+	background-color: black;
 	color: white;
 }

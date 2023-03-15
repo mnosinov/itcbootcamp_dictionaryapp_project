@@ -176,8 +176,42 @@ searchInputTxt.addEventListener('keydown', e => {
 		console.log(e.target.value);
 	}
 });
+
+function toggleAudio(audio, playImg) {
+	if (audio.paused) {
+		audio.play();
+		playImg.src = 'images/stop.png';
+	} else {
+		// stop playing the sound
+		audio.pause();
+		audio.currentTime = 0;
+		playImg.src = 'images/play.png';
+	}
+}
+
+function initAudioBtns() {
+	let phoneticDivs = document.querySelectorAll('.phonetic');
+	phoneticDivs.forEach( div => {
+		let spellText = div.querySelector('.spell-text');
+		let spellAudio = div.querySelector('.spell-audio');
+		let audio = div.querySelector('audio');
+		let playStopImg = div.querySelector('img');
+		spellAudio.addEventListener('click', e => {
+			toggleAudio(audio, playStopImg);
+		});
+		spellText.addEventListener('click', e => {
+			toggleAudio(audio, playStopImg);
+		});
+		audio.addEventListener('ended', e => {
+			playStopImg.src = 'images/play.png';
+		});
+	});
+	console.log(spellAudioDivs);
+}
 /* event handlers -------------------------END */
 
 applyFont();
+
 let defaultTheme = themes.find( element => element.name === 'theme-light');
 initThemes(defaultTheme);
+ initAudioBtns();

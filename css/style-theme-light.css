@@ -3,12 +3,11 @@ body.theme-light {
 	color: black;
 }
 
-/*
-.theme-light main {
-	background-color: white;
-}
-*/
-
 .theme-light #searchInputTxt {
-	background-color: silver;
+	background-color: #f0eded;
+}
+
+.theme-light .font-select {
+	background-color: white;
+	color: inherit;
 }
