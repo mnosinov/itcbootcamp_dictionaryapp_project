@@ -210,11 +210,10 @@ searchInputTxt.addEventListener('keydown', e => {
 searchBtn.addEventListener('click', e => {
 		fetchData(e.target.value);
 });
-
 /* event handlers -------------------------END */
 
 applyFont();
 
 let defaultTheme = themes.find( element => element.name === 'theme-light');
 initThemes(defaultTheme);
- initAudioBtns();
+initAudioBtns();
