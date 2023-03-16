@@ -95,8 +95,109 @@ function fetchData(word) {
 }
 
 function showWordInfo(data) {
-	let dataToShow = preprocessInfo(data);
-	// show info TODO
+	let { word, phonetics, meanings, sourceUrls } = preprocessInfo(data);
+
+	// phonetics
+	phoneticsInfo = '';
+	phonetics.forEach( ({ text, audio:audioUrl }) => {
+		console.log(audioUrl);
+		phoneticsInfo += `
+			<div class="phonetic">
+				<p class="spell-text"><a href="#">${text}</a></p>
+				<p class="spell-audio">
+					<img src="images/play.png" alt="Play/Stop Button">
+					<audio src="${audioUrl}"></audio>
+				</p>
+			</div>
+		`;
+	});
+
+	meaningsInfo = '';
+
+	for (let partOfSpeech in meanings) {
+		// meaning definitions
+		let meaningsLis = '';
+		meanings[partOfSpeech].definitions.forEach( ({ definition, example }) => {
+			meaningsLis += `
+				<li>
+					<div class="meaning-text">${definition}</div>
+					<div class="meaning-example">${example}</div>
+				</li>`;
+		});
+
+		// synonyms
+		let synonymsBlock = '';
+		if (meanings[partOfSpeech].synonyms) {
+			let synonymsInfo = '';
+			meanings[partOfSpeech].synonyms.forEach( syn => {
+				synonymsInfo += `<li><a href="#">${syn}</a></li>`;
+			});
+			let synonymsBlock = `
+				<div class="synonyms-list">
+					<h3>Synonyms</h3>
+						<ul>${synonymsInfo}</ul>
+				</div>
+			`;
+		}
+
+		// antonyms
+		let antonymsBlock = '';
+		if (meanings[partOfSpeech].antonyms) {
+			let antonymsInfo = '';
+			meanings[partOfSpeech].antonyms.forEach( ant => {
+				antonymsInfo += `<li><a href="#">${ant}</a></li>`;
+			});
+			antonymsBlock = `
+				<div class="antonyms-list">
+					<h3>Antonyms</h3>
+						<ul>${antonymsInfo}</ul>
+				</div>
+			`;
+		}
+
+		meaningsInfo += `
+			<div class="meaning-part-of-speech">
+				<div class="part-of-speech"><span>${partOfSpeech}</span><div class="horizontal-bar"></div></div>
+				<div class="meanings-div">
+					<h3>Meaning</h3>
+					<ul>${meaningsLis}</ul>
+				</div>
+				${synonymsBlock}
+				${antonymsBlock}
+			</div>
+		`;
+	}
+
+	// source urls
+	sourceUrlsBlock = '';
+	if (sourceUrls) {
+		sourceUrlsInfo = '';
+		sourceUrls.forEach( url => {
+			sourceUrlsInfo += `<li><a href="${url}" target="_blank">${url}</a></li>`;
+		});
+		sourceUrlsBlock = `
+			<div class="horizontal-bar"></div>
+			<div class="source-urls">
+				<h3>Source</h3>
+				<ul>${sourceUrlsInfo}</ul>
+			</div>
+		`;
+	}
+
+	info = `
+		<h2>${word}</h2>
+		<div class="phonetics-list">
+			${phoneticsInfo}
+		</div>
+		<div class="meanings-list">
+			${meaningsInfo}
+		</div>
+		${sourceUrlsBlock}
+	`;
+
+	// final result
+	wordInfoSection.innerHTML = info;
+	initAudioBtns();
 }
 
 function isObjInList(obj, list) {
@@ -115,10 +216,10 @@ function isObjInList(obj, list) {
 }
 
 function preprocessInfo(data) {
-	console.log(data);
+	// console.log(data);
 	let rslt = {};
 	for (let wordData of data) {
-		console.log(wordData);
+		//console.log(wordData);
 		rslt.word = wordData.word;
 		// phonetics
 		for (let ph of wordData.phonetics)
@@ -184,6 +285,7 @@ function initAudioBtns() {
 			toggleAudio(audio, playStopImg);
 		});
 		spellText.addEventListener('click', e => {
+			e.preventDefault();
 			toggleAudio(audio, playStopImg);
 		});
 		audio.addEventListener('ended', e => {
@@ -208,7 +310,7 @@ searchInputTxt.addEventListener('keydown', e => {
 	}
 });
 searchBtn.addEventListener('click', e => {
-		fetchData(e.target.value);
+		fetchData(searchInputTxt.value);
 });
 /* event handlers -------------------------END */
 
