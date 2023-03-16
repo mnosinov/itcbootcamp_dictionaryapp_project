@@ -84,6 +84,7 @@ main {
 	border-top-left-radius: 9px;
 	border-bottom-left-radius: 9px;
 	border: none;
+	height: 40px;
 }
 
 .searchBtn {
@@ -91,7 +92,7 @@ main {
 	background-position: center;
 	background-size: 15px;
 	width: 15px;
-	height: 15px;
+	height: 40px;
 	cursor: pointer;
 	padding: 18px;
 	border-top-right-radius: 9px;

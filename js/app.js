@@ -89,6 +89,7 @@ function fetchData(word) {
 			}
 		})
 		.then(responseData => {
+			console.log(responseData);
 			showWordInfo(responseData);
 		});
 }
@@ -103,18 +104,20 @@ function showWordInfo(data) {
 
 	// phonetics
 	phoneticsBlock = '';
-	phonetics.forEach( ({ text, audio:audioUrl }) => {
-		console.log(audioUrl);
-		phoneticsBlock += `
-			<div class="phonetic">
-				<p class="spell-text"><a href="#">${text}</a></p>
-				<p class="spell-audio">
-					<img src="images/play.png" alt="Play/Stop Button">
-					<audio src="${audioUrl}"></audio>
-				</p>
-			</div>
-		`;
-	});
+	if (phonetics) {
+		phonetics.forEach( ({ text, audio:audioUrl }) => {
+			console.log(audioUrl);
+			phoneticsBlock += `
+				<div class="phonetic">
+					<p class="spell-text"><a href="#">${text}</a></p>
+					<p class="spell-audio">
+						<img src="images/play.png" alt="Play/Stop Button">
+						<audio src="${audioUrl}"></audio>
+					</p>
+				</div>
+			`;
+		});
+	}
 
 	meaningsBlock = '';
 
@@ -263,7 +266,7 @@ function preprocessInfo(data) {
 
 function showWordNotFound(word) {
 	wordInfoSection.innerHTML = `
-		The word "${word}" has been not found in the dictionary.
+		<center>The word "${word}" has been not found in the dictionary.</center>
 	`;
 }
 
@@ -300,7 +303,14 @@ function initAudioBtns() {
 }
 
 function initGotoWordLinks() {
-	const gotoWordLinks = document.querySelectorAll('goto-word');
+	const gotoWordLinks = document.querySelectorAll('.goto-word');
+	gotoWordLinks.forEach( link => {
+		link.addEventListener('click', e => {
+			let linkWord = link.innerHTML;
+			searchInputTxt.value = linkWord;
+			fetchData(linkWord);
+		});
+	});
 }
 /* logic -----------------------------------END */
 
