@@ -72,11 +72,10 @@ function setNextTheme(defaultTheme=undefined) {
 	// add the next theme class to body's class list
 	setThemeToBodyClasses(nextTheme);
 }
+/* style themes ----------------------------END */
 
-function applyFont(font='serif') {
-	document.getElementsByTagName('body')[0].style.fontFamily = font;
-}
 
+/* data fetching ---------------------------BEGIN */
 function fetchData(word) {
 	fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
 		.then(response => {
@@ -93,7 +92,12 @@ function fetchData(word) {
 			showWordInfo(responseData);
 		});
 }
+/* data fetching ---------------------------END */
 
+/* logic -----------------------------------BEGIN */
+function applyFont(font='serif') {
+	document.getElementsByTagName('body')[0].style.fontFamily = font;
+}
 function showWordInfo(data) {
 	let { word, phonetics, meanings, sourceUrls } = preprocessInfo(data);
 
@@ -130,7 +134,7 @@ function showWordInfo(data) {
 		if (meanings[partOfSpeech].synonyms) {
 			let synonymsInfo = '';
 			meanings[partOfSpeech].synonyms.forEach( syn => {
-				synonymsInfo += `<li><a href="#">${syn}</a></li>`;
+				synonymsInfo += `<li><a href="#" class="goto-word">${syn}</a></li>`;
 			});
 			let synonymsBlock = `
 				<div class="synonyms-list">
@@ -145,7 +149,7 @@ function showWordInfo(data) {
 		if (meanings[partOfSpeech].antonyms) {
 			let antonymsInfo = '';
 			meanings[partOfSpeech].antonyms.forEach( ant => {
-				antonymsInfo += `<li><a href="#">${ant}</a></li>`;
+				antonymsInfo += `<li><a href="#" class="goto-word">${ant}</a></li>`;
 			});
 			antonymsBlock = `
 				<div class="antonyms-list">
@@ -198,6 +202,7 @@ function showWordInfo(data) {
 	// final result
 	wordInfoSection.innerHTML = info;
 	initAudioBtns();
+	initGotoWordLinks();
 }
 
 function isObjInList(obj, list) {
@@ -293,9 +298,12 @@ function initAudioBtns() {
 		});
 	});
 }
-/* style themes ----------------------------END */
-/* data fetching ---------------------------BEGIN */
-/* data fetching ---------------------------END */
+
+function initGotoWordLinks() {
+	const gotoWordLinks = document.querySelectorAll('goto-word');
+}
+/* logic -----------------------------------END */
+
 /* event handlers -------------------------BEGIN */
 themeSwitcherBtn.addEventListener('click', e => {
 	setNextTheme();
