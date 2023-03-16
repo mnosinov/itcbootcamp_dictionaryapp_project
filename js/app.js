@@ -102,10 +102,10 @@ function showWordInfo(data) {
 	let { word, phonetics, meanings, sourceUrls } = preprocessInfo(data);
 
 	// phonetics
-	phoneticsInfo = '';
+	phoneticsBlock = '';
 	phonetics.forEach( ({ text, audio:audioUrl }) => {
 		console.log(audioUrl);
-		phoneticsInfo += `
+		phoneticsBlock += `
 			<div class="phonetic">
 				<p class="spell-text"><a href="#">${text}</a></p>
 				<p class="spell-audio">
@@ -116,7 +116,7 @@ function showWordInfo(data) {
 		`;
 	});
 
-	meaningsInfo = '';
+	meaningsBlock = '';
 
 	for (let partOfSpeech in meanings) {
 		// meaning definitions
@@ -130,13 +130,13 @@ function showWordInfo(data) {
 		});
 
 		// synonyms
-		let synonymsBlock = '';
+		let synonymsMiniBlock = '';
 		if (meanings[partOfSpeech].synonyms) {
 			let synonymsInfo = '';
 			meanings[partOfSpeech].synonyms.forEach( syn => {
 				synonymsInfo += `<li><a href="#" class="goto-word">${syn}</a></li>`;
 			});
-			let synonymsBlock = `
+			let synonymsMiniBlock = `
 				<div class="synonyms-list">
 					<h3>Synonyms</h3>
 						<ul>${synonymsInfo}</ul>
@@ -145,13 +145,13 @@ function showWordInfo(data) {
 		}
 
 		// antonyms
-		let antonymsBlock = '';
+		let antonymsMiniBlock = '';
 		if (meanings[partOfSpeech].antonyms) {
 			let antonymsInfo = '';
 			meanings[partOfSpeech].antonyms.forEach( ant => {
 				antonymsInfo += `<li><a href="#" class="goto-word">${ant}</a></li>`;
 			});
-			antonymsBlock = `
+			antonymsMiniBlock = `
 				<div class="antonyms-list">
 					<h3>Antonyms</h3>
 						<ul>${antonymsInfo}</ul>
@@ -159,15 +159,15 @@ function showWordInfo(data) {
 			`;
 		}
 
-		meaningsInfo += `
+		meaningsBlock += `
 			<div class="meaning-part-of-speech">
 				<div class="part-of-speech"><span>${partOfSpeech}</span><div class="horizontal-bar"></div></div>
 				<div class="meanings-div">
 					<h3>Meaning</h3>
 					<ul>${meaningsLis}</ul>
 				</div>
-				${synonymsBlock}
-				${antonymsBlock}
+				${synonymsMiniBlock}
+				${antonymsMiniBlock}
 			</div>
 		`;
 	}
@@ -191,10 +191,10 @@ function showWordInfo(data) {
 	info = `
 		<h2>${word}</h2>
 		<div class="phonetics-list">
-			${phoneticsInfo}
+			${phoneticsBlock}
 		</div>
 		<div class="meanings-list">
-			${meaningsInfo}
+			${meaningsBlock}
 		</div>
 		${sourceUrlsBlock}
 	`;
